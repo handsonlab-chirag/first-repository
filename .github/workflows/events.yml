@@ -1,0 +1,18 @@
+name: CI Workflow
+
+on:
+  check_run:
+    types: [created, rerequested, completed]
+  check_suite:
+    types: [completed, requested]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Run a script
+      run: echo "Running a script for check_run or check_suite event"
