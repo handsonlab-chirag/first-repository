@@ -1,18 +1,59 @@
-name: webhook
+name: Webhook Events Workflow
 
+# Define the events on which the workflow should run
 on:
   check_run:
-    types: [created, rerequested, completed]
+    types: [created, completed, requested_action]
   check_suite:
     types: [completed, requested]
+  deployment:
+    types: [created, completed, failure]
+  deployment_status:
+    types: [success, failure]
 
+# Workflow jobs
 jobs:
-  build:
+  handle_webhook_event:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Run a script
-      run: echo "Running a script for check_run or check_suite event"
+      uses: actions/checkout@v3
+
+    - name: Print event details
+      run: |
+        echo "Webhook event triggered by: ${{ github.event_name }}"
+        echo "Event action: ${{ github.event.action }}"
+
+    # Example job specific to `check_run`
+    - name: Handle check_run event
+      if: github.event_name == 'check_run'
+      run: |
+        echo "Handling check_run event..."
+        echo "Check Run Conclusion: ${{ github.event.check_run.conclusion }}"
+        echo "Check Run Name: ${{ github.event.check_run.name }}"
+        echo "Check Run Status: ${{ github.event.check_run.status }}"
+
+    # Example job specific to `check_suite`
+    - name: Handle check_suite event
+      if: github.event_name == 'check_suite'
+      run: |
+        echo "Handling check_suite event..."
+        echo "Check Suite Conclusion: ${{ github.event.check_suite.conclusion }}"
+        echo "Check Suite Status: ${{ github.event.check_suite.status }}"
+
+    # Example job specific to `deployment`
+    - name: Handle deployment event
+      if: github.event_name == 'deployment'
+      run: |
+        echo "Handling deployment event..."
+        echo "Deployment Status: ${{ github.event.deployment.status }}"
+        echo "Deployment Environment: ${{ github.event.deployment.environment }}"
+
+    # Example job specific to `deployment_status`
+    - name: Handle deployment_status event
+      if: github.event_name == 'deployment_status'
+      run: |
+        echo "Handling deployment_status event..."
+        echo "Deployment Status: ${{ github.event.deployment_status.state }}"
+        echo "Deployment Environment: ${{ github.event.deployment_status.environment }}"
