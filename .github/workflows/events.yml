@@ -5,11 +5,9 @@ on:
   check_run:
     types: [created, completed, requested_action]
   check_suite:
-    types: [completed, requested]
+    types: [completed]
   deployment:
-    types: [created, completed, failure]
   deployment_status:
-    types: [success, failure]
 
 # Workflow jobs
 jobs:
@@ -47,7 +45,6 @@ jobs:
       if: github.event_name == 'deployment'
       run: |
         echo "Handling deployment event..."
-        echo "Deployment Status: ${{ github.event.deployment.status }}"
         echo "Deployment Environment: ${{ github.event.deployment.environment }}"
 
     # Example job specific to `deployment_status`
