@@ -18,5 +18,6 @@ required_version = ">= 1.7.5"
 
 provider "azurerm" {
   # Configuration options
+  features {}
   subscription_id = "763f5087-49dd-49af-847d-5c8b92a1d66b"
 }
