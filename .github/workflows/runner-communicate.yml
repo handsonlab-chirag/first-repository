@@ -1,0 +1,50 @@
+name: Communicate with Runner Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variable
+        run: |
+          echo "MY_ENV_VAR=HelloWorld" >> $GITHUB_ENV
+      - name: Print Environment Variable
+        run: |
+          echo "The value of MY_ENV_VAR is: $MY_ENV_VAR"
+
+# Set output and access the output
+
+      - name: Generate Output
+        id: example_step  # Assigns an ID to this step to access its output
+        run: echo "::set-output name=myOutput::This is an output message"
+      - name: Access Output
+        run: |
+            echo "The output from the previous step is: ${{ steps.example_step.outputs.myOutput }}"
+
+# Creating Annotations for Warnings and Errors
+
+      - name: Log Warning
+        run: echo "::warning file=example.txt,line=10::This is a warning message"
+
+      - name: Log Error
+        run: echo "::error file=example.txt,line=15::This is an error message"
+
+#  Grouping Log Output
+
+      - name: Grouped Logs
+        run: |
+            echo "::group::Starting a grouped log"
+            echo "Log line 1"
+            echo "Log line 2"
+            echo "::endgroup::"
+      
+      - name: Ungrouped Log
+        run: echo "This log is not in the group"

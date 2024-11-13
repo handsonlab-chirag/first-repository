@@ -13,6 +13,5 @@ jobs:
     steps:
       - name: Run PowerShell Command
         run: |
-           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force  # Temporarily bypass execution policy
            Write-Output "Hello, World!"  # Output "Hello, World!" in PowerShell
         shell: powershell  # Specify PowerShell as the shell
