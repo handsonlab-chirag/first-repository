@@ -24,7 +24,7 @@ jobs:
 
       - name: Generate Output
         id: example_step  # Assigns an ID to this step to access its output
-        run: echo "::set-output name=myOutput::This is an output message"
+        run: echo "myOutput=This is an output message" >> $GITHUB_OUTPUT
       - name: Access Output
         run: |
             echo "The output from the previous step is: ${{ steps.example_step.outputs.myOutput }}"
