@@ -18,11 +18,5 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -d '{"title": "Automated Issue", "body": "This issue was created using GITHUB_TOKEN."}' \
           https://api.github.com/repos/${{ github.repository }}/issues
-      
-      - name: Create Anotehr issue
-        run: |
-            curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d '{"title": "Automated Issue", "body": "Issue 2 GITHUB_TOKEN."}' \
-            https://api.github.com/repos/${{ github.repository }}/issues
+
 
