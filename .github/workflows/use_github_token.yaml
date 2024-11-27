@@ -1,0 +1,26 @@
+name: Example of Github Token Use
+
+on: 
+    push:
+      branches: 
+        - main
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create an Issue
+        run: |
+          curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          -d '{"title": "Automated Issue", "body": "This issue was created using GITHUB_TOKEN."}' \
+          https://api.github.com/repos/${{ github.repository }}/issues
+      - name: Commit and Push Changes
+        run: |
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add file.txt
+            git commit -m "Add file.txt"
+            git push origin HEAD
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
