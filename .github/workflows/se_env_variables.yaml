@@ -18,9 +18,9 @@ jobs:
       - name: Set Dynamic Variable
         run: |
             if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-                echo "DEPLOY_ENV=production" >> $GITHUB_ENV
+                echo "DYNAMIC_VAR=production(set dynamically)" >> $GITHUB_ENV
             else
-                echo "DEPLOY_ENV=staging" >> $GITHUB_ENV
+                echo "DYNAMIC_VAR=staging(set dynamically)" >> $GITHUB_ENV
             fi
 
       - name: Use Variables
