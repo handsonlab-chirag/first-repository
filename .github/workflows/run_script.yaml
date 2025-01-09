@@ -11,5 +11,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Running Script
-        run: ./scripts/testscript.sh HelloWorld
+      - name: Run PowerShell Script
+        shell: pwsh
+        run: |
+          # Navigate to the scripts folder and execute the script
+          ./scripts/print-datetime.ps1
